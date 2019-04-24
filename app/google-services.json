@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "278538914142",
+    "firebase_url": "https://mcs-software.firebaseio.com",
+    "project_id": "mcs-software",
+    "storage_bucket": "mcs-software.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:278538914142:android:45276950d12c348b",
+        "android_client_info": {
+          "package_name": "com.mcssoftware.app.mcsclient"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "278538914142-m0tl3n5rvhcb74kg9lckf2p80savv614.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mcssoftware.app.mcsclient",
+            "certificate_hash": "27926793033846217192b06adfdba68dfa0c8c57"
+          }
+        },
+        {
+          "client_id": "278538914142-3u0grr58slolm7fv47q0oichvpoalug8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDaJAkJ5io5QygqIwZUcXF8A_8xCqjgD5Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "278538914142-3u0grr58slolm7fv47q0oichvpoalug8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
