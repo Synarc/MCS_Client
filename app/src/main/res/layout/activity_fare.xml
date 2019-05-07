@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".FareActivity">
+
+
+
+    <TextView
+
+        android:layout_marginTop="150dp"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:text="Your Trip Fare is:"
+        android:textSize="25dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:gravity="center"
+        android:layout_marginTop="15dp"
+        android:id="@+id/pricefare"
+        android:textSize="35sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <Button
+
+        android:layout_marginBottom="7dp"
+        android:background="@drawable/custom_button"
+
+        android:id="@+id/accept"
+        android:layout_width="match_parent"
+        android:text="Accept and Request Trip"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:background="@drawable/custom_button"
+
+        android:id="@+id/backFarePage"
+        android:layout_width="match_parent"
+        android:text="Back"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

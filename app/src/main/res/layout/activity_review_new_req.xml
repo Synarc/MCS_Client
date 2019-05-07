@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ReviewNewReqActivity">
+
+
+    <RelativeLayout
+        android:id="@+id/relLay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/pick"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="0dp"
+            android:text="Pick Up Location" />
+
+        <TextView
+            android:id="@+id/drop"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/pick"
+            android:layout_marginTop="@dimen/spacing"
+            android:text="Drop Off Location" />
+
+        <TextView
+            android:id="@+id/timeReview"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/drop"
+            android:layout_marginTop="@dimen/spacing"
+            android:text="Time" />
+
+        <TextView
+            android:id="@+id/dateReview"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/timeReview"
+            android:layout_marginTop="@dimen/spacing"
+            android:text="Date" />
+
+        <TextView
+            android:id="@+id/fareReview"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/dateReview"
+            android:layout_marginTop="@dimen/spacing"
+            android:text="Fare" />
+
+
+        <TextView
+            android:id="@+id/ori"
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="40dp"
+            android:layout_toEndOf="@+id/pick"
+            android:background="@drawable/button_default"
+            android:text="Fare" />
+
+        <TextView
+            android:id="@+id/des"
+
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/pick"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="@dimen/spacing"
+            android:layout_marginEnd="40dp"
+            android:layout_toEndOf="@+id/drop"
+            android:background="@drawable/button_default"
+            android:text="Drop Off Location" />
+
+        <TextView
+            android:id="@+id/timerev"
+
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/drop"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="@dimen/spacing"
+            android:layout_marginEnd="40dp"
+            android:layout_toEndOf="@+id/timeReview"
+            android:background="@drawable/button_default"
+            android:text="Drop Off Location" />
+
+        <TextView
+            android:id="@+id/dateRev"
+
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/timeReview"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="@dimen/spacing"
+            android:layout_marginEnd="40dp"
+            android:layout_toEndOf="@+id/dateReview"
+            android:background="@drawable/button_default"
+            android:text="Drop Off Location" />
+
+        <TextView
+            android:id="@+id/fareRev"
+
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/dateReview"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="@dimen/spacing"
+            android:layout_marginEnd="40dp"
+            android:layout_toEndOf="@+id/fareReview"
+            android:background="@drawable/button_default"
+            android:text="Drop Off Location" />
+
+
+    </RelativeLayout>
+
+    <TextView
+        android:textSize="20sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="110dp"
+        android:gravity="center"
+        android:text="Please Confirm Your Trip Detail:" />
+
+    <Button
+        android:background="@drawable/custom_button"
+
+        android:id="@+id/confirmSubmit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/backsubmit"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginBottom="14dp"
+        android:text="confirm and submit request" />
+
+    <Button
+        android:background="@drawable/custom_button"
+
+        android:id="@+id/backsubmit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/relLay"
+        android:layout_marginBottom="17dp"
+        android:text="back" />
+
+
+
+
+</RelativeLayout>

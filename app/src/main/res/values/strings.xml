@@ -1,3 +1,31 @@
 <resources>
     <string name="app_name">MCS</string>
+    <string name="title_activity_new">New Trip</string>
+    <string name="new_location">Location</string>
+    <string name="tripInfo">tripInfo</string>
+    <string name="fare">fare</string>
+
+    <string name="time_picker_example">Time Picker Example</string>
+    <string name="time_pick">Pick the time and press save button</string>
+    <string name="time_save">Confirm time and Proceed</string>
+    <string name="time_selected"></string>
+    <string name="time_current">The Time is:</string>
+    <string name="time">time</string>
+
+
+    <string name="hello_world">Hello world!</string>
+    <string name="date_label_set">Press the button to set the date</string>
+    <string name="date_button_set">Set Date</string>
+    <string name="date_view_set">The Date is: </string>
+    <string name="date_selected"></string>
+    <string name="date">date</string>
+    <string name="des">des</string>
+    <string name="ori">ori</string>
+    <string name="oriLat">oriLat</string>
+    <string name="oriLong">oriLong</string>
+    <string name="desLat">desLat</string>
+    <string name="desLong">desLong</string>
+    <string name="reqTrip">RequestedTrips</string>
+    <string name="RegClient">RegisteredClients</string>
+    <string name="clientInfo">ClientInfo</string>
 </resources>
