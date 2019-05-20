@@ -28,4 +28,5 @@
     <string name="reqTrip">RequestedTrips</string>
     <string name="RegClient">RegisteredClients</string>
     <string name="clientInfo">ClientInfo</string>
+    <string name="title_activity_pending_maps">Map</string>
 </resources>
