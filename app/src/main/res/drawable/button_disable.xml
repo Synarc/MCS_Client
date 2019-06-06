@@ -4,8 +4,8 @@
 
     <gradient
         android:angle="90"
-        android:endColor="@color/colorPrimary"
-        android:startColor="#D4AFff" />
+        android:endColor="#D4F4F1"
+        android:startColor="#D4Af37" />
 
     <padding
         android:bottom="7dp"
@@ -15,7 +15,7 @@
 
     <stroke
         android:width="2dp"
-        android:color="@color/cardview_dark_background" />
+        android:color="#FFF" />
     <!--android:dashGap="1dp"
     android:dashWidth="4dp"-->
 

@@ -1,19 +1,26 @@
 package com.mcssoftware.app.mcsclient;
 
+import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.location.Address;
 import android.location.Geocoder;
+import android.location.LocationManager;
 import android.support.annotation.DrawableRes;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.text.SpannableString;
+import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -21,7 +28,10 @@ import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -33,6 +43,11 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.libraries.places.compat.GeoDataClient;
+import com.google.android.libraries.places.compat.PlaceDetectionClient;
+import com.google.android.libraries.places.compat.Places;
 import com.google.firebase.database.DatabaseReference;
 import com.mcssoftware.app.mcsclient.MAP_CLASSES.DirectionFinder;
 import com.mcssoftware.app.mcsclient.MAP_CLASSES.DirectionFinderListener;
@@ -45,9 +60,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-public class NewActivity extends FragmentActivity implements OnMapReadyCallback , DirectionFinderListener, GoogleMap.OnCameraIdleListener,
+public class NewActivity extends FragmentActivity implements OnMapReadyCallback, DirectionFinderListener, GoogleMap.OnCameraIdleListener,
         GoogleMap.OnCameraMoveListener {
 
+    private static final int PERMISSIONS_REQUEST = 258;
     private GoogleMap mMap;
     ArrayList<LatLng> listpoints;
     private LatLng Base;
@@ -58,8 +74,10 @@ public class NewActivity extends FragmentActivity implements OnMapReadyCallback 
     TextView desName;
     TextView oriName;
     Button confirmPlace;
+    Button calc, back;
 
     SharedPreferences sp_tripInfo;
+
 
 
     MarkerOptions marker;
@@ -80,14 +98,14 @@ public class NewActivity extends FragmentActivity implements OnMapReadyCallback 
 
     ImageView imageMarker;
 
-   // private String desName, oriName;
+    // private String desName, oriName;
 
 
     int scase = 0;
 
     private Date currentDate;
 
-    private static  final String CASH = "cash";
+    private static final String CASH = "cash";
     private static final String PREPAID = "prepaid";
     private static final String POSTPAID = "postpaid";
     private static final String ASSIGN_DRIVER = "no";
@@ -101,8 +119,7 @@ public class NewActivity extends FragmentActivity implements OnMapReadyCallback 
     private DatabaseReference mDatabase;
     private DatabaseReference mDatabaseFare, mDatabaseCarLoc;
     //private ScheduleInfo scheduleInfo;
-   // private LatLng Base;
-
+    // private LatLng Base;
 
 
     private String m_Text = "";
@@ -112,13 +129,21 @@ public class NewActivity extends FragmentActivity implements OnMapReadyCallback 
 
 
     private Double m;
-    private  Double y;
+    private Double y;
     int roundedfare = 0;
     private static String TIMECONFIRM = "Confirm PickUp Time";
     private static String JOURNEYCONFIRM = "Confirm Journey";
     private static String DATECONFIRM = "Confirm Date";
     private static String PAYMENT_TYPE = "Choose Payment";
     private static String CLIENT_NAME = "Confirm Name";
+
+    GeoDataClient mGeoDataClient;
+    PlaceDetectionClient mPlaceDetectionClient;
+    FusedLocationProviderClient mFusedLocationProviderClient;
+
+
+
+
 
 
     @Override
@@ -131,14 +156,10 @@ public class NewActivity extends FragmentActivity implements OnMapReadyCallback 
         mapFragment.getMapAsync(this);
 
 
-
         sp_tripInfo = getSharedPreferences(getString(R.string.tripInfo), MODE_PRIVATE);
 
 
-
         confirmPlace = findViewById(R.id.confirmPLace);
-
-
 
 
         imageMarker = findViewById(R.id.centerMark);
@@ -147,39 +168,39 @@ public class NewActivity extends FragmentActivity implements OnMapReadyCallback 
 
         oriName = findViewById(R.id.oriName);
 
-        Base = new LatLng(-9.447991923108408,147.1935924142599);
+        Base = new LatLng(-9.447991923108408, 147.1935924142599);
         desName = findViewById(R.id.desName);
 
 
         desName.setText("Destination");
         oriName.setText("Origin");
-       Button calc =  findViewById(R.id.calulateTrip);
-       Button back = findViewById(R.id.backNew);
 
-       calc.setOnClickListener(new View.OnClickListener() {
+
+        calc = findViewById(R.id.calulateTrip);
+        back = findViewById(R.id.backNew);
+
+        calc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                if (!desName.getText().toString().equals("Destination") && !oriName.getText().toString().equals("Origin")){
+                if (!desName.getText().toString().equals("Destination") && !oriName.getText().toString().equals("Origin")) {
 
 
-                    startActivity(new Intent(NewActivity.this, FareActivity.class ));
+                    startActivity(new Intent(NewActivity.this, FareActivity.class));
                 }
 
             }
         });
 
-       back.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View v) {
-               startActivity(new Intent(NewActivity.this, MainActivity.class ));
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(NewActivity.this, MainActivity.class));
 
-           }
-       });
+            }
+        });
 
-
-
-
+        permissionLocation();
     }
 
 
@@ -202,27 +223,36 @@ public class NewActivity extends FragmentActivity implements OnMapReadyCallback 
         );
 
         //mMap.addMarker(new MarkerOptions().position(port_Moresby).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(port_Moresby));
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(port_Moresby, 13));
 
 
-        confirmPlace.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                longPressMap(mMap.getCameraPosition().target);
-            }
-        });
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        else {
+            mMap.setMyLocationEnabled(true);
+
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(port_Moresby));
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(port_Moresby, 13));
 
 
+            confirmPlace.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    longPressMap(mMap.getCameraPosition().target);
+                }
+            });
 
 
-
-
-
-
-        mMap.setOnCameraIdleListener(this);
-        mMap.setOnCameraMoveListener(this);
-
+            mMap.setOnCameraIdleListener(this);
+            mMap.setOnCameraMoveListener(this);
+        }
 
 
     }
@@ -436,6 +466,12 @@ public class NewActivity extends FragmentActivity implements OnMapReadyCallback 
 
        // imageMarker.setVisibility(View.GONE);
         Log.d("CAMERA_POS", "onCameraIdle: "+ mMap.getCameraPosition().target);
+//        desName.setVisibility(View.VISIBLE);
+//        oriName.setVisibility(View.VISIBLE);
+//
+        confirmPlace.setVisibility(View.VISIBLE);
+//        calc.setVisibility(View.VISIBLE);
+//        back.setVisibility(View.VISIBLE);
 
 
     }
@@ -454,6 +490,12 @@ public class NewActivity extends FragmentActivity implements OnMapReadyCallback 
 //                .title("Marker in Sydney");
 //
 //        mMap.addMarker(marker);
+//        desName.setVisibility(View.GONE);
+//        oriName.setVisibility(View.GONE);
+//        calc.setVisibility(View.GONE);
+//        back.setVisibility(View.GONE);
+
+        confirmPlace.setVisibility(View.GONE);
         imageMarker.setVisibility(View.VISIBLE);
 
     }
@@ -468,4 +510,53 @@ public class NewActivity extends FragmentActivity implements OnMapReadyCallback 
         vectorDrawable.draw(canvas);
         return BitmapDescriptorFactory.fromBitmap(bitmap);
     }
+
+
+    private void permissionLocation(){
+
+        LocationManager lm = (LocationManager) getSystemService(LOCATION_SERVICE);
+        if (!lm.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            //finish();
+        }
+
+        //Check whether this app has access to the location permission//
+
+
+        int permission = ContextCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION);
+
+//If the location permission has been granted, then start the TrackerService//
+
+        if (permission == PackageManager.PERMISSION_GRANTED) {
+        } else {
+
+//If the app doesn’t currently have access to the user’s location, then request access//
+
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                    PERMISSIONS_REQUEST);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[]
+            grantResults) {
+
+//If the permission has been granted...// 3400139
+
+        if (requestCode == PERMISSIONS_REQUEST && grantResults.length == 1
+                && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+            //...then start the GPS tracking service//
+
+
+        } else {
+
+//If the user denies the permission request, then display a toast with some more information//
+
+            Toast.makeText(this, "Please enable location services to allow GPS tracking", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
 }

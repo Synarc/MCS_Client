@@ -27,9 +27,10 @@
                 android:text="Registeration Page"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
-
+            
 
             <EditText
+                android:textSize="18dp"
                 android:hint="First Name"
                 android:id="@+id/firstNameReg"
                 android:layout_width="match_parent"
@@ -37,6 +38,7 @@
 
 
             <EditText
+                android:textSize="18dp"
                 android:hint="Last Name"
                 android:id="@+id/lastNameReg"
                 android:layout_width="match_parent"
@@ -62,6 +64,8 @@
             </RadioGroup>
 
             <Button
+                android:textSize="18dp"
+                android:layout_marginTop="15dp"
                 android:background="@drawable/custom_button"
                 android:enabled="false"
                 android:id="@+id/registerBtn"

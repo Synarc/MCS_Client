@@ -6,4 +6,7 @@
 
     <item
         android:drawable="@drawable/button_default" />
+
+    <item android:state_enabled="true"
+        android:drawable="@drawable/button_disable"/>
 </selector>

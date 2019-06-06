@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    tools:context=".PickTimeActivity" >
+
+
+    <Button
+        android:id="@+id/set_button"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/timePicker1"
+
+        android:layout_marginTop="140dp"
+        android:background="@drawable/custom_button"
+        android:onClick="setTime"
+        android:text="@string/time_save" />
+
+    <TimePicker
+        android:id="@+id/timePicker1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="121dp"
+        android:layout_marginBottom="5dp" />
+
+    <Button
+
+        android:id="@+id/backTime"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/set_button"
+
+
+        android:layout_marginTop="42dp"
+        android:background="@drawable/custom_button"
+        android:text="Back" />
+
+
+
+
+
+</RelativeLayout>

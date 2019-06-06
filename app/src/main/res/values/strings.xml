@@ -29,4 +29,6 @@
     <string name="RegClient">RegisteredClients</string>
     <string name="clientInfo">ClientInfo</string>
     <string name="title_activity_pending_maps">Map</string>
+    <string name="testReqTrip">TestRequestedTrips</string>
+    <string name="carApproach">CarApproach</string>
 </resources>

@@ -53,6 +53,9 @@ public class PickTimeActivity extends AppCompatActivity {
         int hour = timePicker1.getCurrentHour();
         int min = timePicker1.getCurrentMinute();
         showTime(hour, min);
+        SharedPreferences sp_ = getSharedPreferences("FROM_MAIN", MODE_PRIVATE);
+
+        sp_.edit().putBoolean("isFromMain", false).apply();
         startActivity(new Intent(PickTimeActivity.this, PickDateActivity.class));
 
     }
