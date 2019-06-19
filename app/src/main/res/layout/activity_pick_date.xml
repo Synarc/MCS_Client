@@ -13,10 +13,8 @@
         android:id="@+id/button1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
         android:layout_below="@+id/datePicker1"
         android:layout_marginTop="45dp"
-
         android:text="Confirm Date and Proceed" />
 
     <DatePicker
@@ -26,19 +24,19 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginStart="34dp"
+        android:layout_marginStart="32dp"
 
-        android:layout_marginTop="0dp"
-        android:layout_marginEnd="28dp" />
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="30dp" />
 
     <Button
-        android:background="@drawable/custom_button"
-
         android:id="@+id/backDate"
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/button1"
-        android:layout_marginTop="11dp"
+        android:layout_marginTop="25dp"
+        android:background="@drawable/custom_button"
         android:text="Back" />
 
 

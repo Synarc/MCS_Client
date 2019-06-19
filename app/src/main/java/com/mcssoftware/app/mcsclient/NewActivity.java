@@ -15,6 +15,7 @@ import android.location.Geocoder;
 import android.location.LocationManager;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
@@ -26,6 +27,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -78,6 +80,8 @@ public class NewActivity extends FragmentActivity implements OnMapReadyCallback,
 
     SharedPreferences sp_tripInfo;
 
+    private ProgressBar progressBar;
+
 
 
     MarkerOptions marker;
@@ -94,56 +98,9 @@ public class NewActivity extends FragmentActivity implements OnMapReadyCallback,
     private LatLng testLatlngDes;
     private TextView textView;
     private boolean isTripReady = false;
-    private boolean isOriginCalculated = false;
-
     ImageView imageMarker;
-
-    // private String desName, oriName;
-
-
-    int scase = 0;
-
-    private Date currentDate;
-
-    private static final String CASH = "cash";
-    private static final String PREPAID = "prepaid";
-    private static final String POSTPAID = "postpaid";
-    private static final String ASSIGN_DRIVER = "no";
-
-    private String payment = "";
-
     ArrayList<Double> distancesToTotal;
-    TimePicker timePicker;
-    DatePicker datePicker;
-    private Button selectTimeButton, clearMap;
-    private DatabaseReference mDatabase;
-    private DatabaseReference mDatabaseFare, mDatabaseCarLoc;
-    //private ScheduleInfo scheduleInfo;
-    // private LatLng Base;
-
-
-    private String m_Text = "";
-
-    int day, month, year, hour, min;
-    int finalday, finalmonth, finalyear, finalHour, finalMin;
-
-
-    private Double m;
-    private Double y;
     int roundedfare = 0;
-    private static String TIMECONFIRM = "Confirm PickUp Time";
-    private static String JOURNEYCONFIRM = "Confirm Journey";
-    private static String DATECONFIRM = "Confirm Date";
-    private static String PAYMENT_TYPE = "Choose Payment";
-    private static String CLIENT_NAME = "Confirm Name";
-
-    GeoDataClient mGeoDataClient;
-    PlaceDetectionClient mPlaceDetectionClient;
-    FusedLocationProviderClient mFusedLocationProviderClient;
-
-
-
-
 
 
     @Override
@@ -156,28 +113,14 @@ public class NewActivity extends FragmentActivity implements OnMapReadyCallback,
         mapFragment.getMapAsync(this);
 
 
-        sp_tripInfo = getSharedPreferences(getString(R.string.tripInfo), MODE_PRIVATE);
+        initialise();
+
+        onClickButtons();
 
 
-        confirmPlace = findViewById(R.id.confirmPLace);
+    }
 
-
-        imageMarker = findViewById(R.id.centerMark);
-        listpoints = new ArrayList<>();
-        distancesToTotal = new ArrayList<>();
-
-        oriName = findViewById(R.id.oriName);
-
-        Base = new LatLng(-9.447991923108408, 147.1935924142599);
-        desName = findViewById(R.id.desName);
-
-
-        desName.setText("Destination");
-        oriName.setText("Origin");
-
-
-        calc = findViewById(R.id.calulateTrip);
-        back = findViewById(R.id.backNew);
+    private void onClickButtons() {
 
         calc.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -200,7 +143,56 @@ public class NewActivity extends FragmentActivity implements OnMapReadyCallback,
             }
         });
 
+        oriName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                Snackbar snackbar = (Snackbar) Snackbar
+                        .make(v, "Choose pick up location by moving map", Snackbar.LENGTH_LONG);
+                snackbar.show();
+
+            }
+        });
+
+        desName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Snackbar snackbar = (Snackbar) Snackbar
+                        .make(v, "Choose drop off location by moving map", Snackbar.LENGTH_LONG);
+                snackbar.show();
+            }
+        });
+
         permissionLocation();
+    }
+
+    private void initialise() {
+
+        sp_tripInfo = getSharedPreferences(getString(R.string.tripInfo), MODE_PRIVATE);
+
+
+        confirmPlace = findViewById(R.id.confirmPLace);
+
+
+        imageMarker = findViewById(R.id.centerMark);
+        listpoints = new ArrayList<>();
+        distancesToTotal = new ArrayList<>();
+
+        oriName = findViewById(R.id.oriName);
+        progressBar = findViewById(R.id.indeterminateBar);
+
+        Base = new LatLng(-9.419426, 147.182256);
+        desName = findViewById(R.id.desName);
+
+
+        desName.setText("Destination");
+        oriName.setText("Origin");
+
+
+        calc = findViewById(R.id.calulateTrip);
+        back = findViewById(R.id.backNew);
+
     }
 
 
@@ -219,8 +211,7 @@ public class NewActivity extends FragmentActivity implements OnMapReadyCallback,
 
         // Add a marker in Sydney and move the camera
         port_Moresby = new LatLng(-9.4438, 147.1803);
-        mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID
-        );
+        mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
 
         //mMap.addMarker(new MarkerOptions().position(port_Moresby).title("Marker in Sydney"));
 
@@ -258,6 +249,12 @@ public class NewActivity extends FragmentActivity implements OnMapReadyCallback,
     }
 
     public void longPressMap (LatLng latLng){
+
+
+        /*
+        *
+        * checks if there are two markers on the screen
+        * */
 
         if (listpoints.size() == 0 || listpoints.size() == 2){
 
@@ -360,6 +357,8 @@ public class NewActivity extends FragmentActivity implements OnMapReadyCallback,
         progressDialog = ProgressDialog.show(this, "Please wait.",
                 "Finding direction..!", true);
 
+        progressBar.setIndeterminate(true);
+
         if (originMarkers != null) {
             for (Marker marker : originMarkers) {
                 marker.remove();
@@ -376,7 +375,9 @@ public class NewActivity extends FragmentActivity implements OnMapReadyCallback,
 
     @Override
     public void onDirectionFinderSuccess(List<Route> routes) {
-        progressDialog.dismiss();
+       progressDialog.dismiss();
+
+
         polylinePaths = new ArrayList<>();
         originMarkers = new ArrayList<>();
         destinationMarkers = new ArrayList<>();
@@ -387,12 +388,6 @@ public class NewActivity extends FragmentActivity implements OnMapReadyCallback,
 
 
         for (Route route : routes) {
-            //mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(route.startLocation, 13));
-
-
-
-//            priceRide = round(route.distance.value *m/1000.0 + y,2);
-//
 
             distancesToTotal.add((double) route.distance.value);
 
@@ -413,9 +408,7 @@ public class NewActivity extends FragmentActivity implements OnMapReadyCallback,
 
         if (isTripReady){
 
-            String str_dest = testLatlngDes.latitude + "," + testLatlngDes.longitude;
             String str_Base = Base.latitude + "," + Base.longitude;
-            sendRequest(str_dest, str_Base);
             listpoints.clear();
             isTripReady = false;
 
@@ -464,36 +457,16 @@ public class NewActivity extends FragmentActivity implements OnMapReadyCallback,
     @Override
     public void onCameraIdle() {
 
-       // imageMarker.setVisibility(View.GONE);
+        //imageMarker.setVisibility(View.GONE);
         Log.d("CAMERA_POS", "onCameraIdle: "+ mMap.getCameraPosition().target);
-//        desName.setVisibility(View.VISIBLE);
-//        oriName.setVisibility(View.VISIBLE);
-//
-        confirmPlace.setVisibility(View.VISIBLE);
-//        calc.setVisibility(View.VISIBLE);
-//        back.setVisibility(View.VISIBLE);
 
+        confirmPlace.setVisibility(View.VISIBLE);
 
     }
 
     @Override
     public void onCameraMove() {
 
-
-
-       // mMap.clear();
-
-
-//         marker = new MarkerOptions().position(mMap.getCameraPosition().target)
-//                .icon(BitmapDescriptorFactory.fromResource(R.drawable.mid_lollipop_icon))
-//
-//                .title("Marker in Sydney");
-//
-//        mMap.addMarker(marker);
-//        desName.setVisibility(View.GONE);
-//        oriName.setVisibility(View.GONE);
-//        calc.setVisibility(View.GONE);
-//        back.setVisibility(View.GONE);
 
         confirmPlace.setVisibility(View.GONE);
         imageMarker.setVisibility(View.VISIBLE);
@@ -520,18 +493,13 @@ public class NewActivity extends FragmentActivity implements OnMapReadyCallback,
         }
 
         //Check whether this app has access to the location permission//
-
-
         int permission = ContextCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_FINE_LOCATION);
-
-//If the location permission has been granted, then start the TrackerService//
+        //If the location permission has been granted, then start the TrackerService//
 
         if (permission == PackageManager.PERMISSION_GRANTED) {
         } else {
-
-//If the app doesn’t currently have access to the user’s location, then request access//
-
+            //If the app doesn’t currently have access to the user’s location, then request access//
             ActivityCompat.requestPermissions(this,
                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                     PERMISSIONS_REQUEST);
@@ -542,17 +510,14 @@ public class NewActivity extends FragmentActivity implements OnMapReadyCallback,
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[]
             grantResults) {
 
-//If the permission has been granted...// 3400139
+        //If the permission has been granted...// 3400139
 
         if (requestCode == PERMISSIONS_REQUEST && grantResults.length == 1
                 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
             //...then start the GPS tracking service//
-
-
         } else {
-
-//If the user denies the permission request, then display a toast with some more information//
+            //If the user denies the permission request, then display a toast with some more information//
 
             Toast.makeText(this, "Please enable location services to allow GPS tracking", Toast.LENGTH_SHORT).show();
         }

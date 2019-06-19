@@ -31,101 +31,106 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
-    <Button
+    <!--<Button-->
 
-        android:id="@+id/newTrip"
-        android:layout_width="120dp"
-        android:layout_height="100dp"
-        android:layout_marginStart="44dp"
-        android:layout_marginTop="236dp"
-        android:background="@drawable/custom_button"
-        android:text="New \n Trips"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <!--android:id="@+id/newTrip"-->
+        <!--android:layout_width="120dp"-->
+        <!--android:layout_height="100dp"-->
+        <!--android:layout_marginStart="44dp"-->
+        <!--android:layout_marginTop="236dp"-->
+        <!--android:background="@drawable/custom_button"-->
+        <!--android:text="New \n Trips"-->
+        <!--app:layout_constraintStart_toStartOf="parent"-->
+        <!--app:layout_constraintTop_toTopOf="parent" />-->
 
-    <Button
-        android:id="@+id/requestedTrip"
+    <!--<Button-->
+        <!--android:id="@+id/requestedTrip"-->
 
-        android:layout_width="120dp"
-        android:layout_height="100dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="236dp"
-        android:layout_marginEnd="40dp"
-        android:background="@drawable/custom_button"
-        android:text="Requested Trps"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.607"
-        app:layout_constraintStart_toEndOf="@+id/newTrip"
-        app:layout_constraintTop_toTopOf="parent" />
+        <!--android:layout_width="120dp"-->
+        <!--android:layout_height="100dp"-->
+        <!--android:layout_marginStart="8dp"-->
+        <!--android:layout_marginTop="236dp"-->
+        <!--android:layout_marginEnd="40dp"-->
+        <!--android:background="@drawable/custom_button"-->
+        <!--android:text="Requested Trps"-->
+        <!--app:layout_constraintEnd_toEndOf="parent"-->
+        <!--app:layout_constraintHorizontal_bias="0.607"-->
+        <!--app:layout_constraintStart_toEndOf="@+id/newTrip"-->
+        <!--app:layout_constraintTop_toTopOf="parent" />-->
 
-    <Button
-        android:id="@+id/pendingTrips"
-        android:layout_width="120dp"
-        android:layout_height="100dp"
-        android:layout_marginStart="44dp"
-        android:layout_marginTop="40dp"
-        android:background="@drawable/custom_button"
-        android:text="Pending Trips"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/newTrip" />
+    <!--<Button-->
+        <!--android:id="@+id/pendingTrips"-->
+        <!--android:layout_width="120dp"-->
+        <!--android:layout_height="100dp"-->
+        <!--android:layout_marginStart="44dp"-->
+        <!--android:layout_marginTop="40dp"-->
+        <!--android:background="@drawable/custom_button"-->
+        <!--android:text="Pending Trips"-->
+        <!--app:layout_constraintStart_toStartOf="parent"-->
+        <!--app:layout_constraintTop_toBottomOf="@+id/newTrip" />-->
 
-    <Button
-        android:background="@drawable/custom_button"
+    <!--<Button-->
+        <!--android:background="@drawable/custom_button"-->
 
-        android:id="@+id/completedTrips"
-        android:layout_width="120dp"
-        android:layout_height="100dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="48dp"
-        android:layout_marginEnd="40dp"
-        android:text="Completed Trips"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.602"
-        app:layout_constraintStart_toEndOf="@+id/pendingTrips"
-        app:layout_constraintTop_toBottomOf="@+id/requestedTrip" />
+        <!--android:id="@+id/completedTrips"-->
+        <!--android:layout_width="120dp"-->
+        <!--android:layout_height="100dp"-->
+        <!--android:layout_marginStart="8dp"-->
+        <!--android:layout_marginTop="48dp"-->
+        <!--android:layout_marginEnd="40dp"-->
+        <!--android:text="Completed Trips"-->
+        <!--app:layout_constraintEnd_toEndOf="parent"-->
+        <!--app:layout_constraintHorizontal_bias="0.602"-->
+        <!--app:layout_constraintStart_toEndOf="@+id/pendingTrips"-->
+        <!--app:layout_constraintTop_toBottomOf="@+id/requestedTrip" />-->
 
-    <com.hitomi.cmlibrary.CircleMenu
-        android:id="@+id/circle_menu"
-        android:layout_width="300dp"
-        android:layout_height="208dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.336"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <!--<com.hitomi.cmlibrary.CircleMenu-->
+        <!--android:id="@+id/circle_menu"-->
+        <!--android:layout_width="264dp"-->
+        <!--android:layout_height="480dp"-->
+
+        <!--android:layout_marginEnd="8dp"-->
+        <!--app:layout_constraintEnd_toEndOf="parent"-->
+        <!--app:layout_constraintHorizontal_bias="0.473"-->
+        <!--app:layout_constraintStart_toStartOf="parent"-->
+        <!--app:layout_constraintTop_toTopOf="parent" />-->
 
 
     <com.fangxu.allangleexpandablebutton.AllAngleExpandableButton
         android:id="@+id/button_expandable"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="29dp"
+        android:layout_height="27dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginEnd="116dp"
-        android:layout_marginBottom="188dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="300dp"
+        android:layout_marginEnd="150dp"
+        android:layout_marginBottom="8dp"
         app:aebAnimDurationMillis="175"
         app:aebBlurBackground="true"
         app:aebBlurRadius="10"
         app:aebButtonElevation="4dp"
-        app:aebButtonGapDp="25dp"
-        app:aebEndAngleDegree="90"
+        app:aebButtonGapDp="15dp"
+        app:aebEndAngleDegree="360"
         app:aebIsSelectionMode="false"
-        app:aebMainButtonRotateAnimDurationMillis="250"
-        app:aebMainButtonRotateDegree="-135"
+        app:aebMainButtonRotateAnimDurationMillis="1000"
+        app:aebMainButtonRotateDegree="-360"
         app:aebMainButtonSizeDp="56dp"
         app:aebMainButtonTextColor="#ffff5656"
         app:aebMainButtonTextSizeSp="20dp"
-        app:aebMaskBackgroundColor="@color/colorPrimary"
+        app:aebMaskBackgroundColor="@color/colorAccent"
         app:aebRippleColor="@color/colorAccent"
         app:aebRippleEffect="true"
-        app:aebStartAngleDegree="90"
-        app:aebSubButtonSizeDp="56dp"
-        app:aebSubButtonTextColor="#ff0000ff"
-        app:aebSubButtonTextSizeSp="18dp"
+        app:aebStartAngleDegree="0"
+        app:aebSubButtonSizeDp="46dp"
+        app:aebSubButtonTextColor="@color/colorAccent"
+        app:aebSubButtonTextSizeSp="14dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.993"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
 
 

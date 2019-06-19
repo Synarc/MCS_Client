@@ -171,7 +171,7 @@ public class PendingMapsActivity extends FragmentActivity implements OnMapReadyC
                         Log.d("Pending trips", "onDataChange: "+ post.getKey());
 
                         carName = post.child("car").getValue().toString();
-                       oriLat= (double) post.child("oriLatLng").child("latitude").getValue();
+                        oriLat= (double) post.child("oriLatLng").child("latitude").getValue();
                         oriLng= (double) post.child("oriLatLng").child("longitude").getValue();
 
                         carNameDettails.setText("Vehicle Picking You Up: \n "+carName);

@@ -11,6 +11,7 @@ import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -60,6 +61,8 @@ public class MainActivity extends AppCompatActivity {
     DatabaseReference databaseReference1;
     ValueEventListener val;
 
+    int index1;
+
     boolean carAssigned = false;
     CircleMenu circleMenu;
 
@@ -67,6 +70,24 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+        boolean connected = false;
+        ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+        if(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
+                connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
+            //we are connected to a network
+            connected = true;
+        }
+        else {
+            connected = false;
+        }
+
+        if (!connected){
+            Toast.makeText(this, "Please Connect to the Interent", Toast.LENGTH_SHORT).show();
+            finish();
+        }
+
 
 
         if (isInternetAvailable() || isNetworkConnected()){
@@ -85,11 +106,11 @@ public class MainActivity extends AppCompatActivity {
 
 
         final TextView signedInAs = findViewById(R.id.signedInAs);
-
-        final Button newTrip = findViewById(R.id.newTrip);
-        final Button reqTrip = findViewById(R.id.requestedTrip);
-        final Button pendTrip = findViewById(R.id.pendingTrips);
-        final Button comTrip = findViewById(R.id.completedTrips);
+//
+//        final Button newTrip = findViewById(R.id.newTrip);
+//        final Button reqTrip = findViewById(R.id.requestedTrip);
+//        final Button pendTrip = findViewById(R.id.pendingTrips);
+//        final Button comTrip = findViewById(R.id.completedTrips);
 
 
        // pendTrip.setEnabled(false);
@@ -106,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 if (!dataSnapshot.child("Car").getValue().toString().equals("NA")){
-                    pendTrip.setEnabled(true);
+//                    pendTrip.setEnabled(true);
                     carAssigned = true;
                 }
             }
@@ -145,75 +166,75 @@ public class MainActivity extends AppCompatActivity {
 
         sharedPreferences.edit().putString("phone", user.getPhoneNumber()).apply();
 
-        newTrip.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if (isInternetAvailable() || isNetworkConnected()){
-                    Toast.makeText(MainActivity.this, "New", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(MainActivity.this, NewActivity.class));
-                }else {
-                    Toast.makeText(MainActivity.this, "Please Connect to the Internet", Toast.LENGTH_SHORT).show();
-
-                }
-            }
-        });
-        reqTrip.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if (isInternetAvailable() || isNetworkConnected()){
-                    Toast.makeText(MainActivity.this, "Requested", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(MainActivity.this, RequestedTripActivity.class));
-                }
-                else
-                    {
-
-                        Toast.makeText(MainActivity.this, "Please Connect to the Internet", Toast.LENGTH_SHORT).show();
-
-                    }
-
-
-            }
-        });
-        pendTrip.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-
-                if (isInternetAvailable() || isNetworkConnected()){
-                    if (carAssigned) {
-                        Toast.makeText(MainActivity.this, "Pending", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(MainActivity.this, PendingMapsActivity.class));
-                    } else {
-                        Toast.makeText(MainActivity.this, "Vehicle Yet to be Assigned", Toast.LENGTH_SHORT).show();
-
-                    }
-                }
-                else {
-                    Toast.makeText(MainActivity.this, "Please Connect to the Internet", Toast.LENGTH_SHORT).show();
-
-                }
-
-
-            }
-        });
-        comTrip.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if (isInternetAvailable() || isNetworkConnected()){
-                    Toast.makeText(MainActivity.this, "Completed", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(MainActivity.this, CompletedTripActivity.class));
-
-                }
-                else {
-                    Toast.makeText(MainActivity.this, "Please Connect to the Internet", Toast.LENGTH_SHORT).show();
-
-                }
-
-            }
-        });
+//        newTrip.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                if (isInternetAvailable() || isNetworkConnected()){
+//                    Toast.makeText(MainActivity.this, "New", Toast.LENGTH_SHORT).show();
+//                    startActivity(new Intent(MainActivity.this, NewActivity.class));
+//                }else {
+//                    Toast.makeText(MainActivity.this, "Please Connect to the Internet", Toast.LENGTH_SHORT).show();
+//
+//                }
+//            }
+//        });
+//        reqTrip.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                if (isInternetAvailable() || isNetworkConnected()){
+//                    Toast.makeText(MainActivity.this, "Requested", Toast.LENGTH_SHORT).show();
+//                    startActivity(new Intent(MainActivity.this, RequestedTripActivity.class));
+//                }
+//                else
+//                    {
+//
+//                        Toast.makeText(MainActivity.this, "Please Connect to the Internet", Toast.LENGTH_SHORT).show();
+//
+//                    }
+//
+//
+//            }
+//        });
+//        pendTrip.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//
+//                if (isInternetAvailable() || isNetworkConnected()){
+//                    if (carAssigned) {
+//                        Toast.makeText(MainActivity.this, "Pending", Toast.LENGTH_SHORT).show();
+//                        startActivity(new Intent(MainActivity.this, PendingMapsActivity.class));
+//                    } else {
+//                        Toast.makeText(MainActivity.this, "Vehicle Yet to be Assigned", Toast.LENGTH_SHORT).show();
+//
+//                    }
+//                }
+//                else {
+//                    Toast.makeText(MainActivity.this, "Please Connect to the Internet", Toast.LENGTH_SHORT).show();
+//
+//                }
+//
+//
+//            }
+//        });
+//        comTrip.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                if (isInternetAvailable() || isNetworkConnected()){
+//                    Toast.makeText(MainActivity.this, "Completed", Toast.LENGTH_SHORT).show();
+//                    startActivity(new Intent(MainActivity.this, CompletedTripActivity.class));
+//
+//                }
+//                else {
+//                    Toast.makeText(MainActivity.this, "Please Connect to the Internet", Toast.LENGTH_SHORT).show();
+//
+//                }
+//
+//            }
+//        });
 
         TextView logout = findViewById(R.id.loggout);
 
@@ -288,7 +309,7 @@ public class MainActivity extends AppCompatActivity {
 //            }
 //        };
 
-        cirmen();
+       // cirmen();
         angleMenu(this);
 
     }
@@ -364,31 +385,18 @@ public class MainActivity extends AppCompatActivity {
     public  void cirmen(){
         circleMenu = (CircleMenu) findViewById(R.id.circle_menu);
 
-        circleMenu.setMainMenu(Color.parseColor("#D4AF4F"), R.drawable.icon_menu, R.drawable.ic_cancel_black_24dp)
-                .addSubMenu(Color.parseColor("#800694"),R.drawable.ic_home_black_24dp)
-                .addSubMenu(Color.parseColor("#800694"), R.drawable.ic_search_black_24dp)
-                .addSubMenu(Color.parseColor("#800694"), R.drawable.ic_notifications_black_24dp)
-//                .addSubMenu(Color.parseColor("#8A39FF"), R.mipmap.icon_setting)
+        circleMenu.setMainMenu(Color.parseColor("#D4AF4F"), R.drawable.ic_directions_car_black_24dp, R.drawable.ic_cancel_black_24dp)
+                .addSubMenu(Color.parseColor("#800694"),R.drawable.ic_add_black_24dp)
+                .addSubMenu(Color.parseColor("#800694"), R.drawable.ic_arrow_forward_black_24dp)
+                .addSubMenu(Color.parseColor("#800694"), R.drawable.ic_hourglass_empty_black_24dp)
+
+                .addSubMenu(Color.parseColor("#800694"), R.drawable.ic_playlist_add_check_black_24dp)
 //                .addSubMenu(Color.parseColor("#FF6A00"), R.mipmap.icon_gps)
                 .setOnMenuSelectedListener(new OnMenuSelectedListener() {
 
                     @Override
                     public void onMenuSelected(int index) {
-                        if (index == 0){
-
-                            Toast.makeText(MainActivity.this, "Home", Toast.LENGTH_SHORT).show();
-
-                        }
-                        if (index == 1){
-
-                            Toast.makeText(MainActivity.this, "Search", Toast.LENGTH_SHORT).show();
-                            if (index == 2){
-
-                                Toast.makeText(MainActivity.this, "Notify", Toast.LENGTH_SHORT).show();
-
-                            }
-
-                        }
+                        index1 = index;
                     }
 
                 }).setOnMenuStatusChangeListener(new OnMenuStatusChangeListener() {
@@ -407,9 +415,16 @@ public class MainActivity extends AppCompatActivity {
     public void angleMenu(Context context){
         AllAngleExpandableButton button = (AllAngleExpandableButton)findViewById(R.id.button_expandable);
         final List<ButtonData> buttonDatas = new ArrayList<>();
-        int[] drawable = {R.drawable.ic_notifications_black_24dp, R.drawable.ic_search_black_24dp, R.drawable.ic_menu_black_24dp, R.drawable.ic_home_black_24dp};
-        for (int i = 0; i < drawable.length; i++) {
-            ButtonData buttonData = ButtonData.buildIconButton(context, drawable[i], 0);
+
+        int[] draw = {R.drawable.ic_directions_car_black_24dp, R.drawable.ic_add_black_24dp, R.drawable.ic_arrow_forward_black_24dp, R.drawable.ic_playlist_add_check_black_24dp, R.drawable.ic_hourglass_empty_black_24dp};
+
+
+       // int[] drawable = {R.drawable.ic_notifications_black_24dp, R.drawable.ic_search_black_24dp, R.drawable.ic_menu_black_24dp, R.drawable.ic_home_black_24dp};
+       // {"Trip Menu", "New Trips","Reques Trips", "Pending Trips", "Completed Trips"};//
+       // buttonDatas.add( ButtonData.buildIconButton(this, draw[1], 5));
+
+        for (int i = 0; i < draw.length; i++) {
+            ButtonData buttonData = (ButtonData) ButtonData.buildIconButton(this,draw[i], 5);
             buttonDatas.add(buttonData);
         }
         button.setButtonDatas(buttonDatas);
@@ -420,6 +435,68 @@ public class MainActivity extends AppCompatActivity {
             public void onButtonClicked(int index) {
                 //do whatever you want,the param index is counted from startAngle to endAngle,
                 //the value is from 1 to buttonCount - 1(buttonCount if aebIsSelectionMode=true)
+
+
+
+
+                if (index == 1){
+
+                    if (isInternetAvailable() || isNetworkConnected()){
+                        Toast.makeText(MainActivity.this, "New", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(MainActivity.this, NewActivity.class));
+                    }else {
+                        Toast.makeText(MainActivity.this, "Please Connect to the Internet", Toast.LENGTH_SHORT).show();
+
+                    }
+
+
+                }
+                if (index == 2){
+
+                    if (isInternetAvailable() || isNetworkConnected()){
+                        Toast.makeText(MainActivity.this, "Requested", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(MainActivity.this, RequestedTripActivity.class));
+                    }
+                    else
+                    {
+
+                        Toast.makeText(MainActivity.this, "Please Connect to the Internet", Toast.LENGTH_SHORT).show();
+
+                    }
+
+
+                }
+                if (index == 4){
+
+                    if (isInternetAvailable() || isNetworkConnected()){
+                        if (carAssigned) {
+                            Toast.makeText(MainActivity.this, "Pending", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(MainActivity.this, PendingMapsActivity.class));
+                        } else {
+                            Toast.makeText(MainActivity.this, "Vehicle Yet to be Assigned", Toast.LENGTH_SHORT).show();
+
+                        }
+                    }
+                    else {
+                        Toast.makeText(MainActivity.this, "Please Connect to the Internet", Toast.LENGTH_SHORT).show();
+
+                    }
+                }
+
+                if (index == 3){
+
+                    if (isInternetAvailable() || isNetworkConnected()){
+                        Toast.makeText(MainActivity.this, "Completed", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(MainActivity.this, CompletedTripActivity.class));
+
+                    }
+                    else {
+                        Toast.makeText(MainActivity.this, "Please Connect to the Internet", Toast.LENGTH_SHORT).show();
+
+                    }
+                }
+
+
             }
 
             @Override

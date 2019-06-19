@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".RequestedTripActivity">
     <TextView
-        android:text="Requested"
+        android:text="Functionality of this page is yet to be up"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
