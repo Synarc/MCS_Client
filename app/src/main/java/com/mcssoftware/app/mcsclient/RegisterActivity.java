@@ -1,6 +1,8 @@
 package com.mcssoftware.app.mcsclient;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -34,48 +36,60 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
 
 
-
-         user = FirebaseAuth.getInstance().getCurrentUser();
+        user = FirebaseAuth.getInstance().getCurrentUser();
         firstName = findViewById(R.id.firstNameReg);
         lastName = findViewById(R.id.lastNameReg);
 
         databaseRegCLients = FirebaseDatabase.getInstance().getReference(getString(R.string.RegClient));
 
-        databaseClientInfoInTripRequest = FirebaseDatabase.getInstance().getReference(getString(R.string.reqTrip));
+        databaseClientInfoInTripRequest = FirebaseDatabase.getInstance().getReference(getString(R.string.testReqTrip));
 
         register = findViewById(R.id.registerBtn);
 
 
+            register.setEnabled(true
+            );
 
-
-        register.setEnabled(true
-        );
 
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
 
                 group = findViewById(R.id.radioBut);
 
                 int selectId = group.getCheckedRadioButtonId();
 
                 gender = findViewById(selectId);
-                Toast.makeText(RegisterActivity.this, gender.getText().toString()+","+ firstName.getText().toString() +','+lastName.getText().toString(), Toast.LENGTH_SHORT).show();
 
-                ClientInfo clientInfo = new ClientInfo(firstName.getText().toString(),
-                        lastName.getText().toString(),
-                        firstName.getText().toString() +' '+lastName.getText().toString(),
-                        user.getPhoneNumber(),
-                        gender.getText().toString()
+                if (firstName.getText() == null || lastName.getText() == null || gender == null) {
+
+                    Toast.makeText(RegisterActivity.this, "Please Fill In All Details", Toast.LENGTH_SHORT).show();
+
+                }else {
+
+                    Toast.makeText(RegisterActivity.this, gender.getText().toString()+","+ firstName.getText().toString() +','+lastName.getText().toString(), Toast.LENGTH_SHORT).show();
+
+                    ClientInfo clientInfo = new ClientInfo(firstName.getText().toString(),
+                            lastName.getText().toString(),
+                            firstName.getText().toString() + ' ' + lastName.getText().toString(),
+                            user.getPhoneNumber(),
+                            gender.getText().toString()
 
 
-                );
+                    );
+                    databaseRegCLients.child(user.getUid()).setValue(clientInfo);
 
 
-                databaseClientInfoInTripRequest.child(user.getUid()).child(getString(R.string.clientInfo)).setValue(clientInfo);
-                databaseRegCLients.child(user.getUid()).setValue(clientInfo);
 
-                startActivity(new Intent(RegisterActivity.this, MainActivity.class));
+                    startActivity(new Intent(RegisterActivity.this, MainActivity.class));
+
+                    finish();
+                }
+
+
+
             }
         });
 

@@ -7,7 +7,7 @@
     tools:context=".CompletedTripActivity">
 
     <TextView
-        android:text="Completed"
+        android:text="The functions of this page is yet to be up"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 

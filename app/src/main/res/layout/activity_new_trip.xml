@@ -5,15 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".NewTripActivity">
+   >
 
-    <com.mapbox.mapboxsdk.maps.MapView
-        android:id="@+id/mapView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        mapbox:mapbox_cameraTargetLat="-9.447991923108408"
-        mapbox:mapbox_cameraTargetLng="147.1935924142599"
-        mapbox:mapbox_cameraZoom="11" />
 
 
 
